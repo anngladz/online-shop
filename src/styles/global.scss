@@ -1,0 +1,11 @@
+@import './settings.scss';
+@import './normalize.scss';
+
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: $main-font;
+}
