@@ -1,0 +1,21 @@
+@import '../../../styles/settings.scss';
+
+.product {
+    display: flex;
+    flex-direction: column;
+    flex: 0 45%;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid $border-color;
+    text-align: center;
+
+    img {
+        width: 300px;
+        align-self: center;
+    }
+
+    p:first-of-type {
+        margin: 10px 0 0 0;
+        font-weight: bold;
+    }
+}
