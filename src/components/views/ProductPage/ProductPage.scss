@@ -1,0 +1,57 @@
+@import '../../../styles/settings.scss';
+
+.product-page {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.product {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid $border-color;
+    text-align: center;
+    text-decoration: none;
+    color: $font-color;
+}
+
+.add {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid $border-color;
+    text-align: center;
+    text-decoration: none;
+    color: $font-color;
+}
+
+.counter {
+    display: flex;
+    margin: 10px;
+    justify-content: center;
+
+    button {
+        width: 50px;
+        padding: 0 10px;
+        margin: 0 10px;
+    }
+}
+
+button {
+    width: 150px;
+    padding: 10px;
+    background: none;
+    border: 1px solid $border-color;
+    cursor: pointer;
+    outline: none;
+    align-self: center;
+
+    &:hover {
+        border: 1px solid $font-color;
+    }
+}

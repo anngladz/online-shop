@@ -1,5 +1,7 @@
 /* selectors */
 export const getAll = ({ products }) => products.data;
+export const getById = ({ products }, id) => products.data.filter(item => item.id === id);
+export const amount = ({ products }) => products.amount;
 
 /* action name creator */
 const reducerName = 'products';

@@ -4,8 +4,35 @@
     display: flex;
     padding: 20px;
     border-bottom: 1px solid $border-color;
+    justify-content: space-between;
 
+    a {
+        text-decoration: none;
+        color: $font-color;
+    }
+}
+
+.logo {
+    
     h1 {
         margin: 0;
+    }
+
+    p {
+        font-size: 14px;
+        text-transform: uppercase;
+    }
+}
+
+.cart {
+    display: flex;
+
+    a {
+        align-self: center;
+        padding: 0 0 0 15px;
+
+        &:hover {
+            font-weight: bold;
+        }
     }
 }

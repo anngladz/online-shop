@@ -6,3 +6,21 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.product-link {
+    display: flex;
+    flex-direction: column;
+    flex: 0 47%;
+    margin: 10px;
+    padding: 10px;
+    border: 1px solid $border-color;
+    text-align: center;
+    text-decoration: none;
+    color: $font-color;
+    transition: .5s;
+
+    &:hover {
+        transform: scale(1.05);
+    }
+}
+

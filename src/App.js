@@ -6,6 +6,7 @@ import { store } from './redux/store';
 
 import MainLayout  from './components/layout/MainLayout/MainLayout';
 import { Homepage } from './components/views/Homepage/Homepage';
+import { ProductPage } from './components/views/ProductPage/ProductPage';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <MainLayout>
           <Switch>
             <Route exact path='/' component={Homepage} />
+            <Route exact path='/product/:id' component={ProductPage} />
           </Switch>
         </MainLayout>
       </BrowserRouter>
