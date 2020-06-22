@@ -1,6 +1,7 @@
 export const initialState = {
     products: {
-        amount: 0,
+        cart: [],
+        total: 0,
         data: [
             {   
                 id: '1',

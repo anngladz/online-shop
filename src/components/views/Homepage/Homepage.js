@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 import { getAll } from '../../../redux/productsRedux.js';
@@ -21,7 +20,7 @@ class Homepage extends React.Component {
             <div className="products-wrapper">
                 {products.map(product => {
                     return (
-                        <Link key={product.id} className="product-link" to={'product/'+ product.id}><Product  image={product.image} name={product.name} price={product.price} /></Link>
+                        <a key={product.id} className="product-link" href={'product/'+ product.id}><Product  image={product.image} name={product.name} price={product.price} /></a>
                     )
                 })}
             </div>

@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-import { getById } from '../../../redux/productsRedux.js';
+import { getById, addToCart } from '../../../redux/productsRedux.js';
 
 import Product from '../../features/Product/Product';
 
@@ -13,8 +13,12 @@ class ProductPage extends React.Component {
         products: PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
     };
 
+    handleCart = (id) => {
+        this.props.addToCart(id);
+    }
+
     render() {
-        const {  productById } = this.props;
+        const { productById, cart, total } = this.props;
 
         return (
             <div className="product-page">
@@ -25,7 +29,14 @@ class ProductPage extends React.Component {
                             <div className="counter">
                                 <button>+</button><p>0</p><button>-</button>
                             </div>
-                            <button>Add to cart</button>
+                            <button onClick={() => {this.handleCart(product.id)}}>Add to cart</button>
+                        </div>
+                    );
+                })}
+                {cart.map(product => {
+                    return (
+                        <div className="product" key={product.id}>
+                            {product.name} {product.price} {total}
                         </div>
                     );
                 })}
@@ -39,10 +50,19 @@ const mapStateToProps = (state, props) => {
 
     return {
       productById: getById(state,id),
+      cart: state.products.cart,
+      total: state.products.total
     };
 };
 
-const ProductPageContainer = connect(mapStateToProps)(ProductPage);
+const mapDispatchToProps = (dispatch) =>{
+    
+    return {
+        addToCart: (id) => {dispatch(addToCart(id))}
+    };
+}
+
+const ProductPageContainer = connect(mapStateToProps, mapDispatchToProps)(ProductPage);
   
 export {
     ProductPageContainer as ProductPage,

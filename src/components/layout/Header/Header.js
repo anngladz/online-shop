@@ -13,7 +13,7 @@ const Header = () => (
         <div className="cart">
             <a href="/">Store</a>
             <a href="/cart">My Cart</a>
-            <a href="/cart"><img src="img/cart.png" alt="Cart"></img></a>
+            <a href="/cart"><img src="/img/cart.png" alt="Cart"></img></a>
         </div>
     </div>
   );
