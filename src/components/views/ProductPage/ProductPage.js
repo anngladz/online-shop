@@ -10,7 +10,8 @@ import './ProductPage.scss';
 
 class ProductPage extends React.Component {
     static propTypes = {
-        products: PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
+        productById: PropTypes.oneOfType([PropTypes.array,PropTypes.object]),
+        addToCart: PropTypes.func
     };
 
     handleCart = (id) => {
@@ -18,7 +19,7 @@ class ProductPage extends React.Component {
     }
 
     render() {
-        const { productById, cart, total } = this.props;
+        const { productById } = this.props;
 
         return (
             <div className="product-page">
@@ -26,17 +27,7 @@ class ProductPage extends React.Component {
                     return (
                         <div className="product" key={product.id}>
                             <Product image={product.image} name={product.name} price={product.price} description={product.description} />
-                            <div className="counter">
-                                <button>+</button><p>0</p><button>-</button>
-                            </div>
                             <button onClick={() => {this.handleCart(product.id)}}>Add to cart</button>
-                        </div>
-                    );
-                })}
-                {cart.map(product => {
-                    return (
-                        <div className="product" key={product.id}>
-                            {product.name} {product.price} {total}
                         </div>
                     );
                 })}
@@ -50,8 +41,6 @@ const mapStateToProps = (state, props) => {
 
     return {
       productById: getById(state,id),
-      cart: state.products.cart,
-      total: state.products.total
     };
 };
 

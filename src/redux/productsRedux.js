@@ -1,6 +1,10 @@
+// import axios from 'axios';
+
 /* selectors */
 export const getAll = ({ products }) => products.data;
 export const getById = ({ products }, id) => products.data.filter(item => item.id === id);
+export const getCart = ({ products }) => products.cart;
+export const getTotal = ({ products }) => products.total;
 
 /* action name creator */
 const reducerName = 'products';
@@ -11,12 +15,18 @@ const FETCH_START = createActionName('FETCH_START');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const ADD_TO_CART = createActionName('ADD_TO_CART');
+const REMOVE_ITEM = createActionName('REMOVE_ITEM');
+const ADD_QUANTITY = createActionName('ADD_QUANTITY');
+const SUB_QUANTITY = createActionName('SUB_QUANTITY');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const addToCart = id => ({ id, type: ADD_TO_CART });
+export const removeItem = id => ({ id, type: REMOVE_ITEM });
+export const addQuantity = id => ({ id, type: ADD_QUANTITY });
+export const subtractQuantity = id => ({ id, type: SUB_QUANTITY });
 
 /* thunk creators */
 
@@ -53,25 +63,74 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case ADD_TO_CART: {
-      let addedItem = statePart.data.find(item => item.id === action.id);
-      let existed_item = statePart.cart.find(item => action.id === item.id);
+      let addedProduct = statePart.data.find(item => item.id === action.id);
+      let productExist = statePart.cart.find(item => action.id === item.id);
       
-      if (existed_item) {
-        addedItem.quantity += 1;
+      if (productExist) {
         return {
-          ...statePart,
-          total: statePart.total + addedItem.price 
+          ...statePart
         }
       }
       else {
-        addedItem.quantity = 1;
-        let newTotal = statePart.total + addedItem.price; 
+        addedProduct.quantity = 1;
+        let newTotal = statePart.total + addedProduct.price; 
+        let inCart = statePart.inCart + 1;
         return {
           ...statePart,
-          cart: [...statePart.cart, addedItem],
-          total : newTotal
+          cart: [...statePart.cart, addedProduct],
+          total : newTotal,
+          inCart: inCart
           }          
         }
+    }
+    case REMOVE_ITEM: {
+      let productRemove = statePart.cart.find(item => action.id === item.id);
+      let newProducts = statePart.cart.filter(item => action.id !== item.id);
+
+      let newTotal = statePart.total - (productRemove.price * productRemove.quantity);
+      let inCart = statePart.inCart - 1;
+
+      return {
+          ...statePart,
+          cart: newProducts,
+          total: newTotal,
+          inCart: inCart
+      }
+    }
+    case ADD_QUANTITY: {
+        let  addedProduct = statePart.cart.find(item => item.id === action.id)
+        addedProduct.quantity += 1;
+       
+          let newTotal = statePart.total + addedProduct.price
+          return {
+              ...statePart,
+              total: newTotal,
+          }
+    }
+    case SUB_QUANTITY: {
+      let addedProduct = statePart.cart.find(item => item.id === action.id) 
+
+      if(addedProduct.quantity === 1){
+          let newProducts = statePart.cart.filter(item => item.id !== action.id); 
+          let newTotal = statePart.total - addedProduct.price;
+          let inCart = statePart.inCart - 1;
+          
+          return {
+            addedProduct,
+              ...statePart,
+              cart: newProducts,
+              total: newTotal,
+              inCart: inCart
+          }
+      }
+      else {
+          addedProduct.quantity -= 1;
+          let newTotal = statePart.total - addedProduct.price;
+          return {
+              ...statePart,
+              total: newTotal
+          }
+      }
     }
     default:
       return statePart;

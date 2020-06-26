@@ -1,0 +1,39 @@
+@import '../../../styles/settings.scss';
+
+.summary-wrapper {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    h3 {
+        margin: 0 0 10px 0;
+    }
+
+    form {
+        width: 300px;
+        display: flex;
+        flex-direction: column;
+        margin: 20px 0 0 0;
+        align-self: center;
+
+        div {
+            margin: 5px 0;
+
+            input {
+                float: right;
+                border: 1px solid $border-color;
+                outline: none;
+            }
+        }
+
+        button {
+            margin: 10px 0;
+            align-self: center;
+        }
+    }
+}
+
+.summary-list {
+    text-align: center;
+    align-self: center;
+}

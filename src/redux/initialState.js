@@ -2,13 +2,14 @@ export const initialState = {
     products: {
         cart: [],
         total: 0,
+        inCart: 0,
         data: [
             {   
                 id: '1',
                 image: '/img/product-1.jpg',
                 name: 'Xbox One S',
                 price: 250,
-                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis suscipit efficitur ornare. Pellentesque interdum sapien eu commodo dapibus. Interdum et malesuada fames ac ante ipsum primis in faucibus.'
+                description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis suscipit efficitur ornare. Pellentesque interdum sapien eu commodo dapibus. Interdum et malesuada fames ac ante ipsum primis in faucibus.',
             },
             {
                 id: '2',

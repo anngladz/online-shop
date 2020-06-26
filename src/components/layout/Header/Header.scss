@@ -27,6 +27,11 @@
 .cart {
     display: flex;
 
+    p {
+        align-self: center;
+        margin: 0 0 0 5px;
+    }
+
     a {
         align-self: center;
         padding: 0 0 0 15px;

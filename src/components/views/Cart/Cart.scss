@@ -1,0 +1,80 @@
+@import '../../../styles/settings.scss';
+
+.cart-wrapper {
+    padding: 20px;
+}
+
+.cart-item {
+    display: flex;
+    flex-wrap: wrap;
+    border-bottom: 1px solid $border-color;
+    padding: 10px 0;
+}
+
+.item-info {
+    display: flex;
+    flex: 50% 0;
+
+    img {
+        max-width: 100px;
+    }
+
+    p {
+        align-self: center;
+    }
+}
+
+.quantity {
+    display: flex;
+    flex: 50% 0;
+    justify-content: flex-end;
+
+    p {
+        align-self: center;
+        margin: 0 0 0 10px;
+    }
+
+    button {
+        width: 50px;
+        margin: 0 0 0 10px;
+    }
+}
+
+.cart-total {
+    text-align: right;
+}
+
+.summary {
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    margin: 10px 0 0 0;
+
+    p {
+        flex: 100% 0;
+        align-self: center;
+        margin: 0 0 10px 0;
+    }
+
+    span {
+        font-weight: bold;
+    }
+
+    button {
+        display: block;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+
+@media (max-width: 420px) {
+    .item-info {
+        flex: 100% 0;
+    }
+    
+    .quantity {
+        flex: 100% 0;
+    }
+  }

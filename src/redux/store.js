@@ -1,6 +1,9 @@
 import { combineReducers, createStore, applyMiddleware } from 'redux';
-import thunk from 'redux-thunk';
 import { composeWithDevTools } from 'redux-devtools-extension';
+import thunk from 'redux-thunk';
+
+import { persistStore, persistReducer } from 'redux-persist';
+import storage from 'redux-persist/lib/storage';
 
 import { initialState } from './initialState';
 import { reducer as productsReducer } from './productsRedux';
@@ -19,11 +22,20 @@ Object.keys(initialState).forEach(item => {
 
 const combinedReducers = combineReducers(reducers);
 
+const persistConfig = {
+  key: 'root',
+  storage
+}
+
+const persistedReducer = persistReducer(persistConfig, combinedReducers);
+
 // create store
 export const store = createStore(
-  combinedReducers,
+  persistedReducer,
   initialState,
   composeWithDevTools(
     applyMiddleware(thunk)
   )
 );
+
+export const persistor = persistStore(store);
