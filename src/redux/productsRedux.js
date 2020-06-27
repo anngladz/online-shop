@@ -1,8 +1,10 @@
-// import axios from 'axios';
+import axios from 'axios';
+import { api, url } from './api';
 
 /* selectors */
 export const getAll = ({ products }) => products.data;
-export const getById = ({ products }, id) => products.data.filter(item => item.id === id);
+// export const getById = ({ products }, id) => products.data.filter(item => item.id === id);
+export const getLoadingState = ({ products }) => products.loading;
 export const getCart = ({ products }) => products.cart;
 export const getTotal = ({ products }) => products.total;
 
@@ -19,6 +21,7 @@ const REMOVE_ITEM = createActionName('REMOVE_ITEM');
 const ADD_QUANTITY = createActionName('ADD_QUANTITY');
 const SUB_QUANTITY = createActionName('SUB_QUANTITY');
 
+
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
@@ -29,7 +32,35 @@ export const addQuantity = id => ({ id, type: ADD_QUANTITY });
 export const subtractQuantity = id => ({ id, type: SUB_QUANTITY });
 
 /* thunk creators */
+export const fetchProducts = () => {
+  return (dispatch) => {
+    dispatch(fetchStarted());
 
+    axios
+      .get(`${url}${api}/products`)
+      .then(res => {
+        dispatch(fetchSuccess(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
+
+export const fetchProductById = (id) => {
+  return (dispatch) => {
+    dispatch(fetchStarted(id));
+
+    axios
+      .get(`${url}${api}/products/${id}`)
+      .then(res => {
+        dispatch(fetchSuccess(res.data));
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
 
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {
@@ -63,8 +94,8 @@ export const reducer = (statePart = [], action = {}) => {
       };
     }
     case ADD_TO_CART: {
-      let addedProduct = statePart.data.find(item => item.id === action.id);
-      let productExist = statePart.cart.find(item => action.id === item.id);
+      let addedProduct = statePart.data;
+      let productExist = statePart.cart.find(item => action.id === item._id);
       
       if (productExist) {
         return {
