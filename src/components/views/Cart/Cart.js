@@ -34,15 +34,15 @@ class Cart extends React.Component {
             <div className="cart-wrapper">
                 {cart.length ? cart.map(product => {
                     return (
-                        <div className="cart-item" key={product.id}>
+                        <div className="cart-item" key={product._id}>
                             <div className="item-info">
                                 <img src={product.image} alt="product"></img><p>{product.name} {product.price}$</p>
                             </div>
                             <div className="quantity">
-                                <button onClick={()=>{this.handleAddQuantity(product.id)}}>+</button>
+                                <button onClick={()=>{this.handleAddQuantity(product._id)}}>+</button>
                                 <p>{product.quantity}</p>
-                                <button onClick={()=>{this.handleSubtractQuantity(product.id)}}>-</button>
-                                <button onClick={()=>{this.handleRemove(product.id)}}>X</button>
+                                <button onClick={()=>{this.handleSubtractQuantity(product._id)}}>-</button>
+                                <button onClick={()=>{this.handleRemove(product._id)}}>X</button>
                             </div>
                         </div>       
                     );

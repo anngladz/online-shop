@@ -60,7 +60,7 @@ const mapStateToProps = state => ({
     loading: getLoadingState(state),
   });
 
-const mapDispatchToProps = (dispatch, props) =>{
+const mapDispatchToProps = (dispatch, props) => {
     return {
         addToCart: (id) => {dispatch(addToCart(id))},
         fetchProductById: (id = props.match.params.id) => dispatch(fetchProductById(id))

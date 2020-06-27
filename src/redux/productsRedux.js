@@ -20,7 +20,7 @@ const ADD_TO_CART = createActionName('ADD_TO_CART');
 const REMOVE_ITEM = createActionName('REMOVE_ITEM');
 const ADD_QUANTITY = createActionName('ADD_QUANTITY');
 const SUB_QUANTITY = createActionName('SUB_QUANTITY');
-
+const ADD_ORDER = createActionName('ADD_ORDER');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
@@ -30,6 +30,7 @@ export const addToCart = id => ({ id, type: ADD_TO_CART });
 export const removeItem = id => ({ id, type: REMOVE_ITEM });
 export const addQuantity = id => ({ id, type: ADD_QUANTITY });
 export const subtractQuantity = id => ({ id, type: SUB_QUANTITY });
+export const addOrder = (order) => ({ order, type: ADD_ORDER});
 
 /* thunk creators */
 export const fetchProducts = () => {
@@ -50,7 +51,7 @@ export const fetchProducts = () => {
 export const fetchProductById = (id) => {
   return (dispatch) => {
     dispatch(fetchStarted(id));
-
+    
     axios
       .get(`${url}${api}/products/${id}`)
       .then(res => {
@@ -59,6 +60,19 @@ export const fetchProductById = (id) => {
       .catch(err => {
         dispatch(fetchError(err.message || true));
       });
+  };
+};
+
+export const postOrder = function(order) {
+  return dispatch => {
+    dispatch(addOrder(order));
+
+    axios
+      .post(`${url}${api}/orders/add`, order)
+      .then(res => {
+        dispatch(addOrder(res));
+      })
+      .catch(err => console.error('error', err));
   };
 };
 
@@ -115,8 +129,8 @@ export const reducer = (statePart = [], action = {}) => {
         }
     }
     case REMOVE_ITEM: {
-      let productRemove = statePart.cart.find(item => action.id === item.id);
-      let newProducts = statePart.cart.filter(item => action.id !== item.id);
+      let productRemove = statePart.cart.find(item => action.id === item._id);
+      let newProducts = statePart.cart.filter(item => action.id !== item._id);
 
       let newTotal = statePart.total - (productRemove.price * productRemove.quantity);
       let inCart = statePart.inCart - 1;
@@ -129,7 +143,7 @@ export const reducer = (statePart = [], action = {}) => {
       }
     }
     case ADD_QUANTITY: {
-        let  addedProduct = statePart.cart.find(item => item.id === action.id)
+        let  addedProduct = statePart.cart.find(item => item._id === action.id)
         addedProduct.quantity += 1;
        
           let newTotal = statePart.total + addedProduct.price
@@ -139,10 +153,10 @@ export const reducer = (statePart = [], action = {}) => {
           }
     }
     case SUB_QUANTITY: {
-      let addedProduct = statePart.cart.find(item => item.id === action.id) 
+      let addedProduct = statePart.cart.find(item => item._id === action.id) 
 
       if(addedProduct.quantity === 1){
-          let newProducts = statePart.cart.filter(item => item.id !== action.id); 
+          let newProducts = statePart.cart.filter(item => item._id !== action.id); 
           let newTotal = statePart.total - addedProduct.price;
           let inCart = statePart.inCart - 1;
           
@@ -161,6 +175,14 @@ export const reducer = (statePart = [], action = {}) => {
               ...statePart,
               total: newTotal
           }
+      }
+    }
+    case ADD_ORDER: {
+      return {
+        ...statePart,
+        cart: [],
+        total: 0,
+        inCart: 0
       }
     }
     default:
