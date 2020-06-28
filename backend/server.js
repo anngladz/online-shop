@@ -27,7 +27,7 @@ app.use('*', (req, res) => {
 });
 
 /* MONGOOSE */
-mongoose.connect('mongodb+srv://' + process.env.username + ':' + process.env.password + '@cluster0-6vndz.azure.mongodb.net/NewWaveDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://' + process.env.username + ':' + process.env.password + '@cluster0-6vndz.azure.mongodb.net/NexeonDB?retryWrites=true&w=majority', { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
 
 db.once('open', () => {
