@@ -24,3 +24,8 @@
     }
 }
 
+@media (max-width: 420px) {
+    .product-link {
+        flex: 100% 0;
+    }
+  }
