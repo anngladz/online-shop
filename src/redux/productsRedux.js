@@ -3,7 +3,6 @@ import { api, url } from './api';
 
 /* selectors */
 export const getAll = ({ products }) => products.data;
-// export const getById = ({ products }, id) => products.data.filter(item => item.id === id);
 export const getLoadingState = ({ products }) => products.loading;
 export const getCart = ({ products }) => products.cart;
 export const getTotal = ({ products }) => products.total;
@@ -143,29 +142,21 @@ export const reducer = (statePart = [], action = {}) => {
       }
     }
     case ADD_QUANTITY: {
-        let  addedProduct = statePart.cart.find(item => item._id === action.id)
+        let  addedProduct = statePart.cart.find(item => item._id === action.id);
         addedProduct.quantity += 1;
        
-          let newTotal = statePart.total + addedProduct.price
+          let newTotal = statePart.total + addedProduct.price;
           return {
               ...statePart,
               total: newTotal,
           }
     }
     case SUB_QUANTITY: {
-      let addedProduct = statePart.cart.find(item => item._id === action.id) 
+      let addedProduct = statePart.cart.find(item => item._id === action.id);
 
-      if(addedProduct.quantity === 1){
-          let newProducts = statePart.cart.filter(item => item._id !== action.id); 
-          let newTotal = statePart.total - addedProduct.price;
-          let inCart = statePart.inCart - 1;
-          
+      if(addedProduct.quantity === 1){         
           return {
-            addedProduct,
               ...statePart,
-              cart: newProducts,
-              total: newTotal,
-              inCart: inCart
           }
       }
       else {
